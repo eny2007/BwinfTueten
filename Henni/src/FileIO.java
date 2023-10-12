@@ -5,6 +5,21 @@ class FileIO
 {
     private static BufferedReader in = null;
     private static ArrayList<String> dieZeilen = null;
+    private static String fileName = null;
+
+    // Getter and Setter
+    public static ArrayList<String> getDieZeilen( boolean debug ) {
+
+        datenEinlesen(fileName, debug);
+        return dieZeilen;
+
+    }
+
+    public static void setFileName ( String gFileName ){
+
+        fileName = gFileName;
+
+    }
 
     private static String ReadLn ()  // utility function to read from stdin
     {
@@ -19,20 +34,21 @@ class FileIO
         return s;
     }
 
-    public static void datenAusgeben(ArrayList<String> liste) {
+    private static void datenAusgeben(ArrayList<String> liste) {
         for (String zeile : liste) {
             System.out.println(zeile);
         }
     }
 
-    public static boolean datenEinlesen()
+    private static boolean datenEinlesen( String fileName, boolean debug )
     {
         boolean datenSindEingelesen = false;
 
         /** Name der Datei von der Konsole holen */
-        Scanner sc = new Scanner(System.in);
-        System.out.println( "Bitte geben Sie den Dateinamen ein:" );
-        String sFileName = sc.nextLine();
+        //Scanner sc = new Scanner(System.in);
+        //System.out.println( "Bitte geben Sie den Dateinamen ein:" );
+        //String sFileName = sc.nextLine();
+        String sFileName = fileName;
 
         /** Datei öffnen, bei Fehler Meldung ausgeben und abbrechen */
         try {
@@ -60,7 +76,8 @@ class FileIO
             System.err.println( "Die Datei kann nicht geöffnet werden.\nUrsache: " + e);
         }
 
-        datenAusgeben(dieZeilen);
+        if (debug)datenAusgeben(dieZeilen);
+
         return datenSindEingelesen;
     }
 
